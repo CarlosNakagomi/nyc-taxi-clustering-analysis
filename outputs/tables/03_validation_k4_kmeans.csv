@@ -1,0 +1,5 @@
+metric,value,note
+silhouette,0.3246956396728797,K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).
+davies_bouldin,1.251670716461855,K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).
+calinski_harabasz,151.083632921247,K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).
+dunn_index,0.04705803752098367,K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).

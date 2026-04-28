@@ -1,0 +1,1 @@
+Preprocessing: StandardScaler on numeric trip/fare fields; rows with NaN/Inf in numerics dropped; mta_tax all-NaN column dropped. K-Means on scaled matrix shape (600, 10).

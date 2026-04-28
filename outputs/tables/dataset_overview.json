@@ -1,0 +1,17 @@
+{
+  "n_rows": 600,
+  "n_numeric_features": 10,
+  "columns": [
+    "passenger_count",
+    "trip_distance",
+    "fare_amount",
+    "extra",
+    "mta_tax",
+    "tip_amount",
+    "tolls_amount",
+    "improvement_surcharge",
+    "total_amount",
+    "payment_type"
+  ],
+  "data_source": "processed"
+}

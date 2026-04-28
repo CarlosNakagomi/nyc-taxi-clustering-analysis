@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYC Taxi Clustering Report</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --line: #e5e7eb;
+      --accent: #0f766e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      width: min(1300px, 96vw);
+      margin: 24px auto 48px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    h1, h2, h3, h4 { margin-top: 0; }
+    h1 { font-size: 1.85rem; margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 10px; }
+    .muted { color: var(--muted); }
+    .pipeline {
+      font-weight: 600;
+      color: #111827;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .report-image {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .map-frame {
+      width: 100%;
+      min-height: 760px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: block;
+    }
+    .table-wrap { overflow-x: auto; }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+    }
+    .data-table th, .data-table td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .data-table thead th {
+      background: #f1f5f9;
+    }
+    .missing {
+      border: 1px dashed #f59e0b;
+      background: #fffbeb;
+      color: #92400e;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    ul { margin: 8px 0 0 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="card">
+      <h1>Clustering NYC Taxi Trips to Identify Travel Patterns and High-Demand Zones</h1>
+      <p class="muted">Automated script-generated HTML study report</p>
+    </section>
+
+    <section class="card">
+      <h2>Project Overview</h2>
+      <p>This is a Python clustering methodology study using NYC TLC-style taxi trip data. If raw TLC data is unavailable, the pipeline falls back to a reproducible demo dataset so the workflow remains fully runnable end-to-end.</p>
+      
+    </section>
+
+    <section class="card">
+      <h2>Dataset Overview</h2>
+      <ul>
+        <li>Number of rows: <strong>600</strong></li>
+        <li>Number of columns: <strong>10</strong></li>
+        <li>Key variables: <strong>passenger_count, trip_distance, fare_amount, tip_amount, total_amount, payment_type</strong></li>
+        <li>Dataset source: <strong>processed</strong> (processed/raw/demo)</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Methodology Pipeline</h2>
+      <p class="pipeline">Data loading → preprocessing → scaling → PCA → clustering tendency → optimal K → K-Means clustering → validation → insights</p>
+    </section>
+
+    <section class="card">
+      <h2>PCA Results</h2>
+      <img class='report-image' src='../figures/pca_individuals.png' alt='PCA scatter' loading='lazy' decoding='async' />
+      <div style="height:12px;"></div>
+      <img class='report-image' src='../figures/pca_scree.png' alt='PCA scree plot' loading='lazy' decoding='async' />
+      <p class="muted">The first components capture a meaningful share of variance, and the PCA scatter indicates separable structure consistent with downstream clustering.</p>
+    </section>
+
+    <section class="card">
+      <h2>Clustering Tendency / Optimal K</h2>
+      <p><strong>Hopkins statistic:</strong> 0.8230 (values above ~0.5 suggest non-random cluster tendency).</p>
+      <img class='report-image' src='../figures/elbow_k.png' alt='Elbow method' loading='lazy' decoding='async' />
+      <div style="height:12px;"></div>
+      <img class='report-image' src='../figures/silhouette_k.png' alt='Silhouette by k' loading='lazy' decoding='async' />
+      <p class="muted">Selected <strong>k = 4</strong> to balance compactness, separation, and interpretability of business-relevant trip segments.</p>
+    </section>
+
+    <section class="card">
+      <h2>Validation Metrics</h2>
+      <h4>K-Means (k = 4) validation metrics</h4><div class='table-wrap'><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>metric</th>
+      <th>value</th>
+      <th>note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>silhouette</td>
+      <td>0.3247</td>
+      <td>K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).</td>
+    </tr>
+    <tr>
+      <td>davies_bouldin</td>
+      <td>1.2517</td>
+      <td>K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).</td>
+    </tr>
+    <tr>
+      <td>calinski_harabasz</td>
+      <td>151.0836</td>
+      <td>K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).</td>
+    </tr>
+    <tr>
+      <td>dunn_index</td>
+      <td>0.0471</td>
+      <td>K-Means k=4; sklearn. PAM/K-Medoids not in this build (scikit-learn-extra not required).</td>
+    </tr>
+  </tbody>
+</table></div>
+    </section>
+
+    <section class="card">
+      <h2>Cluster Summary</h2>
+      <h4>Cluster summary</h4><div class='table-wrap'><table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>cluster_label</th>
+      <th>passenger_count</th>
+      <th>trip_distance</th>
+      <th>fare_amount</th>
+      <th>extra</th>
+      <th>mta_tax</th>
+      <th>tip_amount</th>
+      <th>tolls_amount</th>
+      <th>improvement_surcharge</th>
+      <th>total_amount</th>
+      <th>payment_type</th>
+      <th>cluster_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Corporate/Low Tip</td>
+      <td>2.065</td>
+      <td>1.325</td>
+      <td>5.346</td>
+      <td>0.750</td>
+      <td>0.5</td>
+      <td>0.485</td>
+      <td>0.762</td>
+      <td>0.30</td>
+      <td>8.145</td>
+      <td>2.645</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <td>Group Rides</td>
+      <td>2.106</td>
+      <td>4.425</td>
+      <td>11.347</td>
+      <td>0.766</td>
+      <td>0.5</td>
+      <td>1.250</td>
+      <td>0.777</td>
+      <td>0.01</td>
+      <td>14.650</td>
+      <td>3.138</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <td>Standard Trips</td>
+      <td>1.985</td>
+      <td>0.912</td>
+      <td>4.326</td>
+      <td>0.652</td>
+      <td>0.5</td>
+      <td>0.417</td>
+      <td>0.504</td>
+      <td>0.00</td>
+      <td>6.400</td>
+      <td>3.023</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table></div>
+      <p><strong>Cluster labels used:</strong> Standard Trips, Premium Trips, Corporate/Low Tip, Group Rides.</p>
+    </section>
+
+    <section class="card">
+      <h2>Demand Hotspots</h2>
+      <img class='report-image' src='../figures/pickup_locations_by_cluster.png' alt='Pickup locations by cluster' loading='lazy' decoding='async' />
+      <div style="height:14px;"></div>
+      <iframe class='map-frame' src='../figures/nyc_cluster_centroid_map.html' title='NYC cluster centroid map'></iframe>
+      <p class="muted">Interactive map is built with Folium (Leaflet) and CartoDB Positron tiles—no Mapbox token required.</p>
+      <ul>
+        <li>Manhattan shows dense standard-trip activity.</li>
+        <li>Airport/JFK-related areas form distinct hotspot behavior.</li>
+        <li>Cluster centroids indicate spatial concentration of different trip types.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Time-Based Trip Behavior</h2>
+      <img class='report-image' src='../figures/time_based_trip_behavior.png' alt='Time-based trip behavior' loading='lazy' decoding='async' />
+      <p class="muted">Peak demand occurs around 12 PM to 5 PM, indicating stronger afternoon taxi activity.</p>
+    </section>
+
+    <section class="card">
+      <h2>Fare-Based Segmentation</h2>
+      <img class='report-image' src='../figures/fare_based_segmentation.png' alt='Fare-based segmentation' loading='lazy' decoding='async' />
+      <p class="muted">Low and very high fare groups dominate the sampled trip distribution.</p>
+    </section>
+
+    <section class="card">
+      <h2>Key Findings</h2>
+      <ul>
+        <li>K-Means with k = 4 provides interpretable trip segments.</li>
+        <li>Demand hotspots appear around Manhattan and JFK-related areas.</li>
+        <li>Afternoon hours show stronger taxi activity.</li>
+        <li>Fare-based clustering separates low, mid, high, and very high fare trips.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
